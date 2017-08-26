@@ -1,0 +1,10 @@
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/obj/Debug/SparrowCore.csprojResolveAssemblyReference.cache
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/obj/Debug/SparrowCore.csproj.CoreCompileInputs.cache
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/SparrowCore.exe
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/SparrowCore.pdb
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/LiteGuard.dll
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/PrimS.Telnet.dll
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/LiteGuard.xml
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/bin/Debug/PrimS.Telnet.xml
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/obj/Debug/SparrowCore.exe
+/Users/fklauke/RiderProjects/Sparrow/SparrowCore/obj/Debug/SparrowCore.pdb
