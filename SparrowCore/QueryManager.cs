@@ -24,9 +24,9 @@ namespace SparrowCore
 
             using (_client = new Client(Config.QueryHost, Config.QueryPort, new CancellationToken()))
             {
-                            
+
                 Console.WriteLine("Connected to " + Config.QueryHost + ":" + Config.QueryPort);
-                
+
                 if (!_client.IsConnected)
                 {
                     throw new IOException("Could not connect to " + Config.QueryHost + ":" + Config.QueryPort);
@@ -36,17 +36,14 @@ namespace SparrowCore
 
                 _client.WriteLine("login " + Config.QueryUsername + " " + Config.QueryPassword).Wait();
                 var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
-                
+
                 Console.WriteLine("Login state: " + response);
 
-                await _client.WriteLine("use " + Config.VirtualServerId).ContinueWith(OnSelectedServer);
+                _client.WriteLine("use " + Config.VirtualServerId).Wait();
+                response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+                
+                Console.WriteLine("Selected virtual server: " + response);
             }
-        }
-
-        private async Task OnSelectedServer(Task result)
-        {
-            var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
-            Console.WriteLine("Selected virtual server: " + response);
         }
 
         public void Disconnect()
