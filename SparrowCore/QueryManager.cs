@@ -11,7 +11,7 @@ namespace SparrowCore
         public IQueryConfig Config { get; }
 
         private Client _client;
-        
+
         public QueryManager(IQueryConfig queryConfig)
         {
             Config = queryConfig;
@@ -22,28 +22,26 @@ namespace SparrowCore
         {
             Console.WriteLine("Connecting to " + Config.QueryHost + ":" + Config.QueryPort);
 
-            using (_client = new Client(Config.QueryHost, Config.QueryPort, new CancellationToken()))
+            _client = new Client(Config.QueryHost, Config.QueryPort, new CancellationToken());
+
+            Console.WriteLine("Connected to " + Config.QueryHost + ":" + Config.QueryPort);
+
+            if (!_client.IsConnected)
             {
-
-                Console.WriteLine("Connected to " + Config.QueryHost + ":" + Config.QueryPort);
-
-                if (!_client.IsConnected)
-                {
-                    throw new IOException("Could not connect to " + Config.QueryHost + ":" + Config.QueryPort);
-                }
-
-                Console.WriteLine("Logging in...");
-
-                _client.WriteLine("login " + Config.QueryUsername + " " + Config.QueryPassword).Wait();
-                var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
-
-                Console.WriteLine("Login state: " + response);
-
-                _client.WriteLine("use " + Config.VirtualServerId).Wait();
-                response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
-                
-                Console.WriteLine("Selected virtual server: " + response);
+                throw new IOException("Could not connect to " + Config.QueryHost + ":" + Config.QueryPort);
             }
+
+            Console.WriteLine("Logging in...");
+
+            _client.WriteLine("login " + Config.QueryUsername + " " + Config.QueryPassword).Wait();
+            var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+
+            Console.WriteLine("Login state: " + response);
+
+            _client.WriteLine("use " + Config.VirtualServerId).Wait();
+            response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+
+            Console.WriteLine("Selected virtual server: " + response);
         }
 
         public void Disconnect()
