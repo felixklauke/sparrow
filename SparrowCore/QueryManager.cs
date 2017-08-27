@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,8 +43,23 @@ namespace SparrowCore
             response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
 
             Console.WriteLine("Selected virtual server: " + response);
+
+            _client.WriteLine("whoami").Wait();
+            response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+            
+            Console.WriteLine("Current status: " + response);
+
+            Console.WriteLine(UserList().Result);
         }
 
+        public async Task<string> UserList()
+        {
+            _client.WriteLine("clientlist").Wait();
+            var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+
+            return response;
+        }
+        
         public void Disconnect()
         {
             throw new System.NotImplementedException();
