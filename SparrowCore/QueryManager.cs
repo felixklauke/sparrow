@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using PrimS.Telnet;
@@ -34,30 +35,40 @@ namespace SparrowCore
 
             Console.WriteLine("Logging in...");
 
-            _client.WriteLine("login " + Config.QueryUsername + " " + Config.QueryPassword).Wait();
-            var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+            var response = SendRequest("login " + Config.QueryUsername + " " + Config.QueryPassword);
 
             Console.WriteLine("Login state: " + response);
 
-            _client.WriteLine("use " + Config.VirtualServerId).Wait();
-            response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+            response = SendRequest("use " + Config.VirtualServerId);
 
             Console.WriteLine("Selected virtual server: " + response);
 
-            _client.WriteLine("whoami").Wait();
-            response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
+            response = SendRequest("whoami");
             
             Console.WriteLine("Current status: " + response);
 
-            Console.WriteLine(UserList().Result);
+            Console.WriteLine(UserList());
         }
 
-        public async Task<string> UserList()
+        public Task<string> SendRequest(string request)
         {
-            _client.WriteLine("clientlist").Wait();
-            var response = await _client.ReadAsync(TimeSpan.FromSeconds(3));
-
-            return response;
+            return SendRequest(request, 5);
+        }
+        
+        public Task<string> SendRequest(string request, int timeOutSeconds)
+        {
+            return SendRequest(request, TimeSpan.FromSeconds(timeOutSeconds));
+        }
+        
+        public async Task<string> SendRequest(string request, TimeSpan timeout)
+        {
+            _client.WriteLine(request).Wait();
+            return await _client.ReadAsync(timeout);
+        }
+        
+        public string UserList()
+        {
+            return SendRequest("clientlist").Result;
         }
         
         public void Disconnect()
