@@ -47,7 +47,7 @@ namespace SparrowCore
             
             Console.WriteLine("Current status: " + response);
 
-            Console.WriteLine(UserList());
+            Console.WriteLine(UserList().Result);
         }
 
         public Task<string> SendRequest(string request)
@@ -66,9 +66,9 @@ namespace SparrowCore
             return await _client.ReadAsync(timeout);
         }
         
-        public string UserList()
+        public Task<string> UserList()
         {
-            return SendRequest("clientlist").Result;
+            return SendRequest("clientlist");
         }
         
         public void Disconnect()
