@@ -43,11 +43,9 @@ namespace SparrowCore
 
             Console.WriteLine("Selected virtual server: " + response);
 
-            response = SendRequest("whoami");
+            Console.WriteLine("I am: " + WhoAmI().Result);
             
-            Console.WriteLine("Current status: " + response);
-
-            Console.WriteLine(UserList().Result);
+            Console.WriteLine("Users online: " + UserList().Result);
         }
 
         public Task<string> SendRequest(string request)
@@ -69,6 +67,11 @@ namespace SparrowCore
         public Task<string> UserList()
         {
             return SendRequest("clientlist");
+        }
+
+        public Task<WhoAmI> WhoAmI()
+        {
+            return WhoAmIParser.CreateWhoAmIReport(SendRequest("whoami"));
         }
         
         public void Disconnect()
