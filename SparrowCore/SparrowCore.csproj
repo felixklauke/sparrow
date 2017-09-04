@@ -49,14 +49,15 @@
   <ItemGroup>
     <Compile Include="IQueryConfig.cs" />
     <Compile Include="IQueryManager.cs" />
-      <Compile Include="ITeamspeakResponse.cs"/>
+    <Compile Include="ITeamspeakResponse.cs"/>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryConfig.cs" />
     <Compile Include="QueryManager.cs" />
-      <Compile Include="TeamspeakResponse.cs"/>
-      <Compile Include="WhoAmI.cs"/>
-      <Compile Include="WhoAmIParser.cs"/>
+    <Compile Include="TeamspeakResponse.cs"/>
+    <Compile Include="TeamspeakResponseParser.cs"/>
+    <Compile Include="WhoAmI.cs"/>
+    <Compile Include="WhoAmIParser.cs"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

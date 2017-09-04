@@ -2,13 +2,13 @@
 {
     public class TeamspeakResponse : ITeamspeakResponse
     {
-        public int StatusId { get; }
+        public int ErrorId { get; }
         public string Message { get; }
 
-        public TeamspeakResponse(string message, int statusId)
+        public TeamspeakResponse(string message, int errorId)
         {
             Message = message;
-            StatusId = statusId;
+            ErrorId = errorId;
         }
     }
 }

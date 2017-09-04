@@ -7,7 +7,12 @@ namespace SparrowCore
     {
         public static Task<WhoAmI> CreateWhoAmIReport(Task<string> sendRequest)
         {
-            return new Task<WhoAmI>(() => new WhoAmI());
+            return new Task<WhoAmI>(() =>
+            {
+                var result = sendRequest.Result;
+                Console.WriteLine("RESULT: " + result);
+                return new WhoAmI();
+            });
         }
     }
 }

@@ -40,17 +40,12 @@ namespace SparrowCore
             Console.WriteLine("Login state: " + response);
 
             response = SendRequest("use " + Config.VirtualServerId);
-
-            Console.WriteLine("Selected virtual server: " + response);
-
-            Console.WriteLine("I am: " + WhoAmI().Result);
-            
-            Console.WriteLine("Users online: " + UserList().Result);
         }
 
-        public Task<string> SendRequest(string request)
+        public ITeamspeakResponse SendRequest(string request)
         {
-            return SendRequest(request, 5);
+            var response = SendRequest(request, 5);
+            return TeamspeakResponseParser.ParseResponse(response).Result;
         }
         
         public Task<string> SendRequest(string request, int timeOutSeconds)
@@ -63,16 +58,7 @@ namespace SparrowCore
             _client.WriteLine(request).Wait();
             return await _client.ReadAsync(timeout);
         }
-        
-        public Task<string> UserList()
-        {
-            return SendRequest("clientlist");
-        }
-
-        public Task<WhoAmI> WhoAmI()
-        {
-            return WhoAmIParser.CreateWhoAmIReport(SendRequest("whoami"));
-        }
+       
         
         public void Disconnect()
         {

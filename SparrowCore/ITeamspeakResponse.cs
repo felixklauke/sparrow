@@ -2,7 +2,7 @@
 {
     public interface ITeamspeakResponse
     {
-        int StatusId { get; }
+        int ErrorId { get; }
         
         string Message { get; }
     }
